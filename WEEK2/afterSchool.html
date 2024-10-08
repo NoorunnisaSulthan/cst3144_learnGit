@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vue.Js Pet Depot</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.7.16/dist/vue.js"></script>
+    <script src="https://kit.fontawesome.com/b3a9ac332d.js" crossorigin="anonymous"></script>
+     
+<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"> -->
+
+</head>
+<body>
+    <div id="app">
+        <header>
+            <h1 v-text="sitename"></h1>
+            <button v-on:click="showCheckout"><i class="fa-solid fa-cart-shopping"> {{cartItemCount}}</i> Checkout</button>
+        </header>
+        <main>
+         <div v-if="showactivity" v-on:click="availableInventory"></div>>
+            
+            <figure>
+                <img v-bind:src="activity.image">
+            </figure>
+            <h2 v-text="activity.title"></h2>
+            <p v-text="activity.description"></p>
+            <p> Price: {{activity.price}}</p>
+            <p>Inventory: {{activity.availableInventory}}</p>
+            <button v-on:click="addToCart" v-if="canAddToCart">Add to Cart</button>
+            <button disabled="disabled" v-else>
+                Add to Cart
+            </button>
+        </div>
+        <div v-else>
+            <h2>Checkout</h2>
+        </div>
+        </main>
+    </div>
+    <script type="text/javascript">
+        let webstore = new Vue({
+            el:'#app',
+            data:{
+                sitename:"After School Activities",
+                activity: {
+              id: 1,
+              subject: "Soccer Training",
+              location: "Community Field",
+              price: 100,
+              spaces: 5,
+              image: "images/download1.jpeg",
+              availableInventory:4
+            },
+                showactivity:true,
+                cart:[]
+
+            },
+            methods:{
+                addToCart:function(){
+                    this.cart.push(this.activity.id);
+                },
+                showCheckout(){
+                    this.showactivity=this.showactivity?false:true;
+                }
+
+            },
+            computed:{
+                cartItemCount:function(){
+                    return this.cart.length ||""
+                },
+                canAddToCart:function(){
+                    return this.activity.availableInventory>this.cartItemCount;
+                },
+                decreaseCount:function(){
+                    return availableInventory--;
+                }
+            }
+        });
+        //inspect using vue instance variable
+    </script>
+</body>
+</html>
